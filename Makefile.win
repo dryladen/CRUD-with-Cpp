@@ -1,0 +1,36 @@
+# Project: Management
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+RES      = Management_private.res
+OBJ      = Main.o File.o $(RES)
+LINKOBJ  = Main.o File.o $(RES)
+LIBS     = -L"D:/Apk/Dev-Cpp/MinGW64/lib" -L"D:/Apk/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Apk/Dev-Cpp/MinGW64/include" -I"D:/Apk/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Apk/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/Apk/Dev-Cpp/MinGW64/include" -I"D:/Apk/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Apk/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Apk/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = Management.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+Main.o: Main.cpp
+	$(CPP) -c Main.cpp -o Main.o $(CXXFLAGS)
+
+File.o: File.cpp
+	$(CPP) -c File.cpp -o File.o $(CXXFLAGS)
+
+Management_private.res: Management_private.rc 
+	$(WINDRES) -i Management_private.rc --input-format=rc -o Management_private.res -O coff 
+
