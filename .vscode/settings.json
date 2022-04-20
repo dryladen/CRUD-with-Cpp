@@ -1,11 +1,7 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
         "*.html": "html",
-        "deque": "cpp",
-        "string": "cpp",
-        "vector": "cpp",
-        "*.tcc": "cpp",
-        "unordered_map": "cpp"
+        "iostream": "cpp",
+        "*.tcc": "cpp"
     }
 }

@@ -4,5 +4,6 @@
 #include <fstream>
 #include <conio.h>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include "..\include\Item.h"

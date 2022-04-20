@@ -1,5 +1,6 @@
 #ifndef _Item
 #define _Item
+#include "MainHeader.h"
 using namespace std;
 struct Item
 {
@@ -12,12 +13,13 @@ class ItemManager
 {
 public:
     std::vector<Item> itemVector;
-    int lastIndex = 0;
-    int lastId = 0;
+    int lastId;
+    fstream file;
     void addItem();
     void removeItem();
     void updateItem();
     void printItems();
+    void openDatabase();
     void readDatabase();
     void writeDatabase();
 };

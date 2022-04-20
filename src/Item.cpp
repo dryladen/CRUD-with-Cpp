@@ -1,16 +1,20 @@
 #include "..\include\MainHeader.h"
 using namespace std;
 
-ItemManager::addItem()
+void ItemManager::addItem()
 {
     Item item;
     item.id = this->lastId;
+    cout << "Nama item   : ";
     fflush(stdin);
     getline(cin, item.name);
+    cout << "Jumlah item : ";
     cin >> item.quantity;
     this->itemVector.push_back(item);
+    this->lastId++;
+    cout << "Item berhasil ditambahkan" << endl;
 }
-ItemManager::removeItem()
+void ItemManager::removeItem()
 {
     int id;
     cout << "Masukkan id item yang akan dihapus: ";
@@ -22,10 +26,12 @@ ItemManager::removeItem()
             this->itemVector.erase(this->itemVector.begin() + i);
             cout << "Item berhasil dihapus" << endl;
             return;
+            lastId--;
         }
     }
+    cout << "Item tidak ditemukan" << endl;
 }
-ItemManager::updateItem()
+void ItemManager::updateItem()
 {
     int id;
     cout << "Masukkan id item yang akan diupdate: ";
@@ -34,54 +40,74 @@ ItemManager::updateItem()
     {
         if (this->itemVector[i].id == id)
         {
+            cout << "Nama item   : ";
             fflush(stdin);
             getline(cin, this->itemVector[i].name);
+            cout << "Jumlah item : ";
             cin >> this->itemVector[i].quantity;
             cout << "Item berhasil diupdate" << endl;
             return;
         }
     }
 }
-ItemManager::printItems()
+void ItemManager::printItems()
 {
     for (int i = 0; i < this->itemVector.size(); i++)
     {
-        cout << "Id: " << this->itemVector[i].id << endl;
-        cout << "Nama: " << this->itemVector[i].name << endl;
+        cout << "Id    : " << this->itemVector[i].id << endl;
+        cout << "Nama  : " << this->itemVector[i].name << endl;
         cout << "Jumlah: " << this->itemVector[i].quantity << endl;
-        cout << "-----------------------------------------------------" << endl;
+        cout << "===============================" << endl;
     }
 }
-ItemManager::readDatabase()
+void ItemManager::openDatabase()
 {
-    ifstream file;
-    file.open("item.csv");
-    string line;
-    while (getline(file, line))
+    file.open("databases\\item.csv", std::ios::out | std::ios::in | std::ios::binary);
+    if (file.is_open())
     {
-        stringstream ss(line);
-        string id, name, quantity;
-        getline(ss, id, ',');
-        getline(ss, name, ',');
-        getline(ss, quantity, ',');
+        return;
+    }
+    file.close();
+    // jika file tidak ada maka akan dibuatkan file baru
+    file.open("databases\\item.csv", std::ios::trunc | std::ios::out | std::ios::in | std::ios::binary);
+}
+void ItemManager::readDatabase()
+{
+    openDatabase();
+    string id, name, quantity;
+    while (!file.eof())
+    {
         Item item;
-        item.id = stoi(id);
+        // mengambil data dari file csv
+        getline(file, id, ',');
+        getline(file, name, ',');
+        getline(file, quantity, '\n');
+        // stringstream untuk convert string ke int
+        stringstream stringId(id);
+        stringstream stringQuantity(quantity);
+        stringId >> item.id;
+        stringQuantity >> item.quantity;
         item.name = name;
-        item.quantity = stoi(quantity);
-        this->itemVector.push_back(item);
         this->lastId = item.id;
+        this->lastId++;
+        // mengecek apakah data di akhir file csv
+        if (file.eof())
+        {
+            break;
+        }
+        this->itemVector.push_back(item);
     }
     file.close();
 }
-ItemManager::writeDatabase()
+void ItemManager::writeDatabase()
 {
-    ofstream file;
-    file.open("item.csv");
+    file.open("databases\\item.csv", std::ios::trunc | std::ios::out | std::ios::in | std::ios::binary);
     for (int i = 0; i < this->itemVector.size(); i++)
     {
-        file << this->itemVector[i].id << ",";
-        file << this->itemVector[i].name << ",";
-        file << this->itemVector[i].quantity << endl;
+        // menulis data ke csv
+        file << this->itemVector[i].id << "," << this->itemVector[i].name << "," << this->itemVector[i].quantity;
+        // untuk enter di file csv
+        file << "\n";
     }
     file.close();
 }
