@@ -5,8 +5,8 @@ CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
 RES      = Management_private.res
-OBJ      = Main.o File.o $(RES)
-LINKOBJ  = Main.o File.o $(RES)
+OBJ      = src/File.o src/Main.o src/Item.o $(RES)
+LINKOBJ  = src/File.o src/Main.o src/Item.o $(RES)
 LIBS     = -L"D:/Apk/Dev-Cpp/MinGW64/lib" -L"D:/Apk/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"D:/Apk/Dev-Cpp/MinGW64/include" -I"D:/Apk/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Apk/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"D:/Apk/Dev-Cpp/MinGW64/include" -I"D:/Apk/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Apk/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Apk/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -25,11 +25,14 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-Main.o: Main.cpp
-	$(CPP) -c Main.cpp -o Main.o $(CXXFLAGS)
+src/File.o: src/File.cpp
+	$(CPP) -c src/File.cpp -o src/File.o $(CXXFLAGS)
 
-File.o: File.cpp
-	$(CPP) -c File.cpp -o File.o $(CXXFLAGS)
+src/Main.o: src/Main.cpp
+	$(CPP) -c src/Main.cpp -o src/Main.o $(CXXFLAGS)
+
+src/Item.o: src/Item.cpp
+	$(CPP) -c src/Item.cpp -o src/Item.o $(CXXFLAGS)
 
 Management_private.res: Management_private.rc 
 	$(WINDRES) -i Management_private.rc --input-format=rc -o Management_private.res -O coff 
