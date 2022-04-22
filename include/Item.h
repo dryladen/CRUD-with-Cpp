@@ -22,5 +22,6 @@ public:
     void openDatabase();
     void readDatabase();
     void writeDatabase();
+    int menu(std::vector<string> menu);
 };
 #endif

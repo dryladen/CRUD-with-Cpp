@@ -1,39 +1,125 @@
 #include "..\include\MainHeader.h"
 using namespace std;
-
+int ItemManager::menu(std::vector<string> menu)
+{
+    int choice;
+    while (true)
+    {
+        for (int i = 0; i < menu.size(); i++)
+        {
+            cout << i + 1 << ". " << menu[i] << endl;
+        }
+        cout << "------------------------" << endl;
+        cout << "Pilih menu: ";
+        cin >> choice;
+        if (choice > 0 && choice <= menu.size())
+        {
+            return choice;
+        }
+        else
+        {
+            cout << "------------------------" << endl;
+            cout << "Pilihan tidak ada" << endl;
+            cout << "------------------------" << endl;
+        }
+    }
+}
 void ItemManager::addItem()
 {
-    Item item;
-    item.id = this->lastId;
-    cout << "Nama item   : ";
-    fflush(stdin);
-    getline(cin, item.name);
-    cout << "Jumlah item : ";
-    cin >> item.quantity;
-    this->itemVector.push_back(item);
-    this->lastId++;
-    cout << "Item berhasil ditambahkan" << endl;
+
+    int choice;
+    std::vector<string> listMenu;
+    listMenu.push_back("Tambah Item");
+    listMenu.push_back("Tambah jumlah Item");
+    choice = menu(listMenu);
+    switch (choice)
+    {
+    case 1:
+    {
+        Item item;
+        item.id = this->lastId;
+        cout << "Nama item   : ";
+        fflush(stdin);
+        getline(cin, item.name);
+        cout << "Jumlah item : ";
+        cin >> item.quantity;
+        this->itemVector.push_back(item);
+        this->lastId++;
+        cout << "------------------------" << endl;
+        cout << "Item berhasil ditambahkan" << endl;
+        cout << "------------------------" << endl;
+        break;
+    }
+    case 2:
+    {
+        int id, jumlah;
+        cout << "Masukkan id item: ";
+        cin >> id;
+        for (int i = 0; i < this->itemVector.size(); i++)
+        {
+            if (this->itemVector[i].id == id)
+            {
+                cout << "Jumlah item: ";
+                cin >> jumlah;
+                this->itemVector[i].quantity += jumlah;
+                cout << "------------------------" << endl;
+                cout << "Jumlah Item berhasil ditambahkan" << endl;
+                cout << "------------------------" << endl;
+                break;
+            }
+        }
+        break;
+    }
+    }
 }
+
 void ItemManager::removeItem()
 {
-    int id;
-    cout << "Masukkan id item yang akan dihapus: ";
+    int choice, id;
+    std::vector<string> listMenu;
+    listMenu.push_back("Hapus Item");
+    listMenu.push_back("Hapus jumlah Item");
+    choice = menu(listMenu);
+    cout << "------------------------" << endl;
+    cout << "Masukkan id item: ";
     cin >> id;
     for (int i = 0; i < this->itemVector.size(); i++)
     {
         if (this->itemVector[i].id == id)
         {
-            this->itemVector.erase(this->itemVector.begin() + i);
-            cout << "Item berhasil dihapus" << endl;
-            return;
-            lastId--;
+            if (choice == 1)
+            {
+                this->itemVector.erase(this->itemVector.begin() + i);
+                cout << "------------------------" << endl;
+                cout << "Item berhasil dihapus" << endl;
+                cout << "------------------------" << endl;
+                return;
+            }
+            else if (choice == 2)
+            {
+                int jumlah;
+                cout << "Jumlah item: ";
+                cin >> jumlah;
+                this->itemVector[i].quantity -= jumlah;
+                if (this->itemVector[i].quantity < 0)
+                {
+                    this->itemVector[i].quantity = 0;
+                }
+                cout << "------------------------" << endl;
+                cout << "Item berhasil dikurangi" << endl;
+                cout << "------------------------" << endl;
+                return;
+            }
         }
     }
+    cout << "------------------------" << endl;
     cout << "Item tidak ditemukan" << endl;
+    cout << "------------------------" << endl;
 }
 void ItemManager::updateItem()
 {
     int id;
+    cout << "------------------------" << endl;
     cout << "Masukkan id item yang akan diupdate: ";
     cin >> id;
     for (int i = 0; i < this->itemVector.size(); i++)
@@ -45,10 +131,15 @@ void ItemManager::updateItem()
             getline(cin, this->itemVector[i].name);
             cout << "Jumlah item : ";
             cin >> this->itemVector[i].quantity;
+            cout << "------------------------" << endl;
             cout << "Item berhasil diupdate" << endl;
+            cout << "------------------------" << endl;
             return;
         }
     }
+    cout << "------------------------" << endl;
+    cout << "Item tidak ditemukan" << endl;
+    cout << "------------------------" << endl;
 }
 void ItemManager::printItems()
 {

@@ -9,14 +9,14 @@ int main()
     itemManager.readDatabase();
     while (loop)
     {
-        cout << "--------------------------" << endl;
+        cout << "===========================" << endl;
         cout << "Program Manajemen Item" << endl;
         cout << "1. Tambah Item" << endl;
         cout << "2. Hapus Item" << endl;
         cout << "3. Update Item" << endl;
         cout << "4. Print Item" << endl;
         cout << "5. Exit" << endl;
-        cout << "--------------------------" << endl;
+        cout << "===========================" << endl;
         cout << "Pilih menu: ";
         cin >> choice;
         switch (choice)
@@ -37,6 +37,7 @@ int main()
             loop = false;
             break;
         default:
+            cout << "===========================" << endl;
             cout << "Pilihan tidak ada" << endl;
             break;
         }
