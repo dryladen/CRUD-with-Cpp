@@ -195,6 +195,38 @@ void ItemManager::shellSort(int jenis, int tipe)
         }
     }
 }
+void ItemManager::searchItems()
+{
+    int id;
+    cout << "Masukkan id item: ";
+    cin >> id;
+    this->binarySearch(this->itemVector, 0, itemVector.size() - 1, id);
+}
+int ItemManager::binarySearch(vector<Item> arr, int l, int r, int x)
+{
+    if (r >= l)
+    {
+        int mid = l + (r - l) / 2;
+        if (arr[mid].id == x)
+        {
+
+            cout << "===============================" << endl;
+            cout << "Item ditemukan" << endl;
+            cout << "-------------------------------" << endl;
+            cout << "Id    : " << this->itemVector[mid].id << endl;
+            cout << "Nama  : " << this->itemVector[mid].name << endl;
+            cout << "Jumlah: " << this->itemVector[mid].quantity << endl;
+            cout << "===============================" << endl;
+            return mid;
+        }
+        if (arr[mid].id > x)
+            return binarySearch(arr, l, mid - 1, x);
+        return binarySearch(arr, mid + 1, r, x);
+    }
+    cout << "------------------------" << endl;
+    cout << "Item tidak ditemukan" << endl;
+    cout << "------------------------" << endl;
+}
 // Manajemen File Ekternal
 void ItemManager::openDatabase()
 {

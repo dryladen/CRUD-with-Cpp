@@ -15,7 +15,8 @@ int main()
         cout << "2. Hapus Item" << endl;
         cout << "3. Update Item" << endl;
         cout << "4. Print Item" << endl;
-        cout << "5. Exit" << endl;
+        cout << "5. Search Item" << endl;
+        cout << "6. Exit" << endl;
         cout << "===========================" << endl;
         cout << "Pilih menu: ";
         cin >> choice;
@@ -34,6 +35,9 @@ int main()
             itemManager.printItems();
             break;
         case 5:
+            itemManager.searchItems();
+            break;
+        case 6:
             loop = false;
             break;
         default:

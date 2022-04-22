@@ -22,6 +22,7 @@ public:
     void sortItems();
     void shellSort(int jenis, int tipe);
     void searchItems();
+    int binarySearch(std::vector<Item> menu, int l, int r, int x);
     void openDatabase();
     void readDatabase();
     void writeDatabase();
