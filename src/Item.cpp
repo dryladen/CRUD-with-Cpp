@@ -143,6 +143,7 @@ void ItemManager::updateItem()
 }
 void ItemManager::printItems()
 {
+    this->sortItems();
     for (int i = 0; i < this->itemVector.size(); i++)
     {
         cout << "Id    : " << this->itemVector[i].id << endl;
@@ -151,6 +152,50 @@ void ItemManager::printItems()
         cout << "===============================" << endl;
     }
 }
+void ItemManager::sortItems()
+{
+    int choice, tipe;
+    std::vector<string> listMenu, listTipe;
+    listMenu.push_back("Urutkan berdasarkan id");
+    listMenu.push_back("Urutkan berdasarkan nama");
+    listMenu.push_back("Urutkan berdasarkan jumlah");
+    choice = menu(listMenu);
+    listTipe.push_back("Ascending");
+    listTipe.push_back("Descending");
+    tipe = menu(listTipe);
+    cout << "choice: " << choice << endl;
+    cout << "tipe: " << tipe << endl;
+    shellSort(choice, tipe);
+}
+void ItemManager::shellSort(int jenis, int tipe)
+{
+    int n = itemVector.size();
+    for (int gap = n / 2; gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < n; i += 1)
+        {
+            Item temp = itemVector[i];
+            int j;
+            if (jenis == 1)
+            {
+                for (j = i; j >= gap && ((tipe == 1) ? (itemVector[j - gap].id > temp.id) : (itemVector[j - gap].id < temp.id)); j -= gap)
+                    itemVector[j] = itemVector[j - gap];
+            }
+            else if (jenis == 2)
+            {
+                for (j = i; j >= gap && ((tipe == 1) ? (itemVector[j - gap].name.compare(temp.name) > 0) : (itemVector[j - gap].name.compare(temp.name)) < 0); j -= gap)
+                    itemVector[j] = itemVector[j - gap];
+            }
+            else if (jenis == 3)
+            {
+                for (j = i; j >= gap && ((tipe == 1) ? (itemVector[j - gap].quantity > temp.quantity) : (itemVector[j - gap].quantity < temp.quantity)); j -= gap)
+                    itemVector[j] = itemVector[j - gap];
+            }
+            itemVector[j] = temp;
+        }
+    }
+}
+// Manajemen File Ekternal
 void ItemManager::openDatabase()
 {
     file.open("databases\\item.csv", std::ios::out | std::ios::in | std::ios::binary);

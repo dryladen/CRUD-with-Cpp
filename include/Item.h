@@ -19,6 +19,9 @@ public:
     void removeItem();
     void updateItem();
     void printItems();
+    void sortItems();
+    void shellSort(int jenis, int tipe);
+    void searchItems();
     void openDatabase();
     void readDatabase();
     void writeDatabase();
