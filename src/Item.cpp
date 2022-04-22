@@ -200,6 +200,7 @@ void ItemManager::searchItems()
     int id;
     cout << "Masukkan id item: ";
     cin >> id;
+    shellSort(1, 1);
     this->binarySearch(this->itemVector, 0, itemVector.size() - 1, id);
 }
 int ItemManager::binarySearch(vector<Item> arr, int l, int r, int x)
