@@ -18,8 +18,7 @@ int main()
         cout << "5. Search Item" << endl;
         cout << "6. Exit" << endl;
         cout << "===========================" << endl;
-        cout << "Pilih menu: ";
-        cin >> choice;
+        choice = itemManager.inputHandling("Masukan pilihan : ");
         switch (choice)
         {
         case 1:

@@ -1,5 +1,21 @@
 #include "..\include\MainHeader.h"
 using namespace std;
+
+int ItemManager::inputHandling(string input)
+{ // Error handling untuk input string
+    int choice;
+    cout << input;
+    cin >> choice;
+    while (cin.fail())
+    {
+        cout << "Error input" << endl;
+        cin.clear();
+        cin.ignore(256, '\n');
+        cout << input;
+        cin >> choice;
+    }
+    return choice;
+}
 int ItemManager::menu(std::vector<string> menu)
 {
     int choice;
@@ -10,8 +26,7 @@ int ItemManager::menu(std::vector<string> menu)
             cout << i + 1 << ". " << menu[i] << endl;
         }
         cout << "------------------------" << endl;
-        cout << "Pilih menu: ";
-        cin >> choice;
+        choice = inputHandling("Pilih menu : ");
         if (choice > 0 && choice <= menu.size())
         {
             return choice;
@@ -54,7 +69,7 @@ void ItemManager::addItem()
     {
         int id, jumlah;
         cout << "Masukkan id item: ";
-        cin >> id;
+        id = inputHandling("Masukan id item : ");
         for (int i = 0; i < this->itemVector.size(); i++)
         {
             if (this->itemVector[i].id == id)
@@ -81,8 +96,7 @@ void ItemManager::removeItem()
     listMenu.push_back("Hapus jumlah Item");
     choice = menu(listMenu);
     cout << "------------------------" << endl;
-    cout << "Masukkan id item: ";
-    cin >> id;
+    id = inputHandling("Masukan id item : ");
     for (int i = 0; i < this->itemVector.size(); i++)
     {
         if (this->itemVector[i].id == id)
@@ -121,7 +135,7 @@ void ItemManager::updateItem()
     int id;
     cout << "------------------------" << endl;
     cout << "Masukkan id item yang akan diupdate: ";
-    cin >> id;
+    id = inputHandling("Masukan id item : ");
     for (int i = 0; i < this->itemVector.size(); i++)
     {
         if (this->itemVector[i].id == id)
@@ -197,9 +211,7 @@ void ItemManager::shellSort(int jenis, int tipe)
 }
 void ItemManager::searchItems()
 {
-    int id;
-    cout << "Masukkan id item: ";
-    cin >> id;
+    int id = inputHandling("Masukan id item : ");
     shellSort(1, 1);
     this->binarySearch(this->itemVector, 0, itemVector.size() - 1, id);
 }
